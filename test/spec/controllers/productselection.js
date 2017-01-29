@@ -5,7 +5,7 @@ describe('Controller: ProductselectionCtrl', function () {
   // load the controller's module
   beforeEach(module('deimosApp'));
 
-  var storedObj = {}; 
+  var storedObj = {};
   var basketService = {
     set: function set(obj) {
       storedObj = obj;
@@ -26,7 +26,7 @@ describe('Controller: ProductselectionCtrl', function () {
     'sports': [
       'Liverpool TV'
     ],
-    'customerID' : 'customerId'
+    'customerID': 'customerId'
   };
 
   var ProductselectionCtrl,
@@ -36,14 +36,14 @@ describe('Controller: ProductselectionCtrl', function () {
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
     rootScope = $rootScope;
-    storedObj = {}; 
+    storedObj = {};
     windowMock = {};
 
     ProductselectionCtrl = $controller('ProductselectionCtrl', {
       $scope: scope,
       init: testCatalogue,
-      BasketService : basketService,
-      $window : windowMock
+      BasketService: basketService,
+      $window: windowMock
       // place here mocked dependencies
     });
   }));
@@ -54,6 +54,28 @@ describe('Controller: ProductselectionCtrl', function () {
     expect(scope.sports).toEqual([{ 'name': 'Liverpool TV', 'selected': false }]);
     expect(scope.news).toEqual([{ 'name': 'Sky News', 'selected': false }, { 'name': 'Sky Sport News', 'selected': false }]);
     expect(scope.customerID).toEqual('customerId');
+  });
+
+  it('sad path - no init data, it should keep catalogue empty', function () {
+
+    inject(function ($controller, $rootScope) {
+      scope = $rootScope.$new();
+      rootScope = $rootScope;
+      storedObj = {};
+      windowMock = {};
+
+      ProductselectionCtrl = $controller('ProductselectionCtrl', {
+        $scope: scope,
+        init: undefined,
+        BasketService: basketService,
+        $window: windowMock
+        // place here mocked dependencies
+      });
+    })
+
+    expect(scope.sports).toEqual([]);
+    expect(scope.news).toEqual([]);
+    expect(scope.customerID).toEqual('unknown');
   });
 
   it('add sport channel to basket when selected', function () {
@@ -118,15 +140,12 @@ describe('Controller: ProductselectionCtrl', function () {
 
   });
 
-    it('should on checkoutClicked store basket and customerId to BasketService and redirect to confirmationPage', function () {
-    scope.basket = {basket: 'basket'};
+  it('should on checkoutClicked store basket and customerId to BasketService and redirect to confirmationPage', function () {
+    scope.basket = { basket: 'basket' };
     scope.checkoutClicked();
 
     expect(basketService.get()).toEqual({ customerID: 'customerId', basket: Object({ basket: 'basket' }) });
     expect(windowMock.location).toEqual('#!/confirmationPage');
-
-
-
   });
 
 });
