@@ -8,14 +8,12 @@
  * Controller of the deimosApp
  */
 angular.module('deimosApp')
-  .controller('ProductselectionCtrl', ['$scope', 'init',
-    function ProductselectionCtrl($scope, init) {
-      $scope.sports= [];
-      $scope.news = [];
+  .controller('ProductselectionCtrl', ['$scope', 'init', 'BasketService', '$window',
+    function ProductselectionCtrl($scope, init, BasketService, $window) {
+      $scope.sports= init.sports.map(function(sportChannel) {return { name: sportChannel, selected: false };});
+      $scope.news = init.news.map(function(newsChannel) {return { name: newsChannel, selected: false };});
+      $scope.customerID = init.customerID;
       $scope.basket = [];
-
-      init.sports.forEach(function add(channel) { $scope.sports.push({ name: channel, selected: false });   });
-      init.news.forEach(function add(channel) { $scope.news.push({ name: channel, selected: false });   });
 
       var addItemToBasket = function (nv) {
         nv.map(function (channel) { return channel.name; }).forEach(function (element) {
@@ -32,25 +30,30 @@ angular.module('deimosApp')
             $scope.basket.splice(index, 1);
           }
         }, this);
-
-
       };
 
       $scope.$watch('news|filter:{selected:true}', addItemToBasket, true);
       $scope.$watch('sports|filter:{selected:true}', addItemToBasket, true);
       $scope.$watch('sports|filter:{selected:false}', removeItemFromBasket, true);
       $scope.$watch('news|filter:{selected:false}', removeItemFromBasket, true);
+
+    $scope.checkoutClicked = function(){
+      BasketService.set({'customerID' : $scope.customerID, 'basket' : $scope.basket});
+      $window.location = '#!/confirmationPage';
+    };
+
     }]).service('ProductSelectionInit', ['$cookies', 'CustomerLocationService', 'CatalogueService', function ($cookies, CustomerLocationService, CatalogueService) {
     var _prepare = function () {
-
-      var promise =  CustomerLocationService.getLocationId($cookies.get('customerId'))
+      var consumerID = $cookies.get('customerId');
+      var promise =  CustomerLocationService.getLocationId(consumerID)
         .then(function (locationId) {
-          console.log("locationId LOADED");
           return CatalogueService.getCatalogue(locationId);
-        });
+        }).then(function(catalogue) {
+          catalogue.customerID = consumerID;
+          return catalogue;
+      });
       
-
-        return promise;
+      return promise;
     };
 
     return {

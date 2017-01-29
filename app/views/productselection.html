@@ -15,12 +15,10 @@
 	</div>
 	<div class="basket-div">
 		<fieldset class="checkboxgroup">
-			<p>Basket</p>
+			<p>Checkout</p>
 			<label ng-repeat="item in basket">
 				<div>{{item}}</div>
 		</fieldset>
-
-		      <button class="md-raised">Button</md-button>
-
+		    <button ng-click="checkoutClicked()">Click</button>
 	</div>
 </div>

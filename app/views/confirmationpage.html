@@ -1,0 +1,9 @@
+<h1>This is confirmation page</h1>
+
+<div ng-controller="ConfirmationpageCtrl as ctrl">
+	<fieldset class="checkboxgroup">
+        <p>CustomerId: {{ctrl.basket.customerID}}</p>
+		<p>Basket</p>
+		<label ng-repeat="item in ctrl.basket.basket">{{item}}</label>
+	</fieldset>
+</div>

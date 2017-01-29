@@ -56,7 +56,7 @@ describe('Service: ConfigService', function () {
 
         expect(data).toEqual({
           'catalogueUrl': testURL
-        })
+        });
         done();
       }, function (err) {
         done(err);

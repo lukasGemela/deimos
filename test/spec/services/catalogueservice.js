@@ -13,7 +13,7 @@ describe('Service: CatalugueService', function () {
   //Mocks
   var httpMock;
   var mockConfigService;
-  var testURL = "http://tests1/catalogue";
+  var testURL = 'http://tests1/catalogue';
 
   var testCatalogue = {
     'news': [
@@ -30,7 +30,7 @@ describe('Service: CatalugueService', function () {
     mockConfigService = {
       getConfig: function () {
         return $q.when({
-          "catalogueUrl": testURL
+          'catalogueUrl': testURL
         });
       }
     };
@@ -44,7 +44,7 @@ describe('Service: CatalugueService', function () {
                 data: testCatalogue
               });
             } else {
-              onError("Failed");
+              onError('Failed');
             }
           }
         };
@@ -54,8 +54,8 @@ describe('Service: CatalugueService', function () {
     spyOn(mockConfigService, 'getConfig').and.callThrough();
 
     module(function ($provide) {
-      $provide.value("$http", httpMock);
-      $provide.value("ConfigService", mockConfigService);
+      $provide.value('$http', httpMock);
+      $provide.value('ConfigService', mockConfigService);
     });
 
     inject(function (_CatalogueService_) {
@@ -74,7 +74,7 @@ describe('Service: CatalugueService', function () {
   });
 
   it('Should call http and return catalogue ', function (done) {
-    CatalogueService.getCatalogue("12345").then(function (data) {
+    CatalogueService.getCatalogue('12345').then(function (data) {
       expect(data).toEqual(testCatalogue);
       expect(mockConfigService.getConfig).toHaveBeenCalled();
       done();
@@ -86,9 +86,9 @@ describe('Service: CatalugueService', function () {
 
   it('Should handle error from http', function (done) {
     CatalogueService.getCatalogue('12345').then(function () {
-      done("FAILED");
+      done('FAILED');
     }, function (err) {
-      expect(err).toEqual("Failed");
+      expect(err).toEqual('Failed');
       expect(mockConfigService.getConfig).toHaveBeenCalled();
       done();
     });

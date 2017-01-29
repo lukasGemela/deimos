@@ -11,7 +11,6 @@
 
 var interceptWith = function(initMethod) {
         return [initMethod, function(m) {
-          console.log(m.prepare());
                     return m.prepare();
                 }];
 };
@@ -28,22 +27,17 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .when('/productSelection', {
         templateUrl: 'views/productselection.html',
         controller: 'ProductselectionCtrl',
         controllerAs: 'productSelection',
         resolve: {
             init: interceptWith('ProductSelectionInit')
         }
+      })
+      .when('/confirmationPage', {
+        templateUrl: 'views/confirmationpage.html',
+        controller: 'ConfirmationpageCtrl',
+        controllerAs: 'confirmationPage'
       })
       .otherwise({
         redirectTo: '/'
