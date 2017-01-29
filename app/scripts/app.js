@@ -8,6 +8,14 @@
  *
  * Main module of the application.
  */
+
+var interceptWith = function(initMethod) {
+        return [initMethod, function(m) {
+          console.log(m.prepare());
+                    return m.prepare();
+                }];
+};
+
 angular
   .module('deimosApp', [
     'ngAnimate',
@@ -19,22 +27,27 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      // .when('/', {
-      //   templateUrl: 'views/main.html',
-      //   controller: 'MainCtrl',
-      //   controllerAs: 'main'
-      // })
-      // .when('/about', {
-      //   templateUrl: 'views/about.html',
-      //   controller: 'AboutCtrl',
-      //   controllerAs: 'about'
-      // })
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl',
+        controllerAs: 'main'
+      })
+      .when('/about', {
+        templateUrl: 'views/about.html',
+        controller: 'AboutCtrl',
+        controllerAs: 'about'
+      })
       .when('/productSelection', {
         templateUrl: 'views/productselection.html',
         controller: 'ProductselectionCtrl',
-        controllerAs: 'productSelection'
+        controllerAs: 'productSelection',
+        resolve: {
+            init: interceptWith('ProductSelectionInit')
+        }
       })
       .otherwise({
         redirectTo: '/'
       });
   });
+
+  

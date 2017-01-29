@@ -1,1 +1,26 @@
-<p>This is the productSelection view.</p>
+<div id="basket-wrapper-div">
+	<div class="basket-div">
+		<fieldset class="checkboxgroup">
+			<p>Sports</p>
+			<label ng-repeat="channel in sports">
+          <input type="checkbox" name="selectedSportChannels[]" value="{{channel.name}}" ng-model="channel.selected"> {{channel.name}}</label>
+		</fieldset>
+	</div>
+	<div class="basket-div">
+		<fieldset class="checkboxgroup">
+			<p>News</p>
+			<label ng-repeat="channel in news">
+          <input type="checkbox" name="selectedNewsChannels[]" value="{{channel.name}}" ng-model="channel.selected"> {{channel.name}}</label>
+		</fieldset>
+	</div>
+	<div class="basket-div">
+		<fieldset class="checkboxgroup">
+			<p>Basket</p>
+			<label ng-repeat="item in basket">
+				<div>{{item}}</div>
+		</fieldset>
+
+		      <button class="md-raised">Button</md-button>
+
+	</div>
+</div>

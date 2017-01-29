@@ -51,6 +51,30 @@ body {
   padding: 14px 24px;
 }
 
+#basket-wrapper-div {
+    width: 900px;
+    overflow: hidden; 
+}
+
+.checkboxgroup{
+    width: 20em;
+    overflow: auto;
+}
+.checkboxgroup p{
+    width: 7em;
+    text-align: right;
+}
+.checkboxgroup label{
+    width: 12em;
+    float: right;
+}
+
+.basket-div {
+    border: 1px solid black;
+    width: 300px;
+    float:left; 
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
