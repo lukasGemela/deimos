@@ -51,7 +51,10 @@ angular.module('deimosApp')
         }).then(function(catalogue) {
           catalogue.customerID = consumerID;
           return catalogue;
-      });
+      }).catch(function(err) {
+        console.log('Init Error: ' + err);
+      }
+      );
       
       return promise;
     };
