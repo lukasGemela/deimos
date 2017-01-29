@@ -10,10 +10,16 @@
 angular.module('deimosApp')
   .controller('ProductselectionCtrl', ['$scope', 'init', 'BasketService', '$window',
     function ProductselectionCtrl($scope, init, BasketService, $window) {
+      if(typeof init != 'undefined') {
       $scope.sports= init.sports.map(function(sportChannel) {return { name: sportChannel, selected: false };});
       $scope.news = init.news.map(function(newsChannel) {return { name: newsChannel, selected: false };});
       $scope.customerID = init.customerID;
       $scope.basket = [];
+      } else {
+        $scope.sports = [];
+        $scope.news = [];
+        $scope.customerID = 'unknown';
+      }
 
       var addItemToBasket = function (nv) {
         nv.map(function (channel) { return channel.name; }).forEach(function (element) {
